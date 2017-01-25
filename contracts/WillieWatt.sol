@@ -67,9 +67,10 @@ contract WillieWatt {
     }
 
     function refund(address _recipient, uint256 _value) returns (bool success) {
-      if(!msg.sender.send(msg.value / 1 ether / 1000)) throw;
       balanceOf[msg.sender] -= msg.value / 1 ether / 1000;
       totalSupply -= msg.value / 1 ether / 1000;
+      if(balanceOf[msg.sender] < 0) throw;                      // Do not process is balance will fall below 0;
+      if(!msg.sender.send(msg.value / 1 ether / 1000)) throw;
       Transfer(this, msg.sender, msg.value / 1 ether / 1000);
       return true;
     }
