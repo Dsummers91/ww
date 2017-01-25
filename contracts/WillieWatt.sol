@@ -71,13 +71,13 @@ contract WillieWatt {
       totalSupply -= _value;
       if(balanceOf[msg.sender] < 0) throw;                      // Do not process is balance will fall below 0;
       if(!msg.sender.send(_value / 1000)) throw;
-      Transfer(this, msg.sender, _value);
+      Transfer(msg.sender, this, _value);
       return true;
     }
 
     function() payable {
       balanceOf[msg.sender] += msg.value * 1000;
       totalSupply += msg.value * 1000;
-      Transfer(msg.sender, this, msg.value * 1000);
+      Transfer(this, msg.sender, msg.value * 1000);
     }
 }
