@@ -66,18 +66,17 @@ contract WillieWatt {
         return true;
     }
 
-    function refund(address _recipient, uint256 _value) return (bool success) {
+    function refund(address _recipient, uint256 _value) returns (bool success) {
       if(!msg.sender.send(msg.value / 1 ether / 1000)) throw;
       balanceOf[msg.sender] -= msg.value / 1 ether / 1000;
       totalSupply -= msg.value / 1 ether / 1000;
       Transfer(this, msg.sender, msg.value / 1 ether / 1000);
-      return true
+      return true;
     }
 
     function() payable {
       balanceOf[msg.sender] += msg.value * 1 ether * 1000;
       totalSupply += msg.value * 1 ether * 1000;
       Transfer(msg.sender, this, msg.value * 1 ether * 1000);
-      return true
     }
 }
