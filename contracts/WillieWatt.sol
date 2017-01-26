@@ -18,13 +18,12 @@ contract WillieWatt {
 
     function WillieWatt(
         string tokenName,
-        uint8 decimalUnits,
         string tokenSymbol
         ) {              
         totalSupply = 0;                        
         name = tokenName;   
         symbol = tokenSymbol;   
-        decimals = decimalUnits;  
+        decimals = 0;  
     }
 
 
@@ -66,18 +65,22 @@ contract WillieWatt {
         return true;
     }
 
-    function refund(address _recipient, uint256 _value) returns (bool success) {
+    function refund(uint256 _value) returns (bool success) {
+      uint256 etherValue = (_value * 1 ether) / 1000;
+
       balanceOf[msg.sender] -= _value;
       totalSupply -= _value;
       if(balanceOf[msg.sender] < 0) throw;                      // Do not process is balance will fall below 0;
-      if(!msg.sender.send(_value / 1000)) throw;
+      if(!msg.sender.send(etherValue)) throw;
       Transfer(msg.sender, this, _value);
       return true;
     }
-
+    
     function() payable {
-      balanceOf[msg.sender] += msg.value * 1000;
-      totalSupply += msg.value * 1000;
-      Transfer(this, msg.sender, msg.value * 1000);
+      uint256 tokenCount = msg.value / 1 ether * 1000;
+
+      balanceOf[msg.sender] += tokenCount;
+      totalSupply += tokenCount;
+      Transfer(this, msg.sender, tokenCount);
     }
 }
