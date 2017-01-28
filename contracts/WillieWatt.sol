@@ -66,7 +66,7 @@ contract WillieWatt {
     }
 
     function refund(uint256 _value) returns (bool success) {
-      uint256 etherValue = (_value * 1 ether) / 1000;
+      uint256 etherValue = (_value / 1000) * 1 ether;
 
       balanceOf[msg.sender] -= _value;
       totalSupply -= _value;
@@ -77,7 +77,7 @@ contract WillieWatt {
     }
     
     function() payable {
-      uint256 tokenCount = msg.value / 1 ether * 1000;
+      uint256 tokenCount = (msg.value * 1000) / 1 ether ;
 
       balanceOf[msg.sender] += tokenCount;
       totalSupply += tokenCount;
