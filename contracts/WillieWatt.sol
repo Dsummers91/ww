@@ -73,7 +73,7 @@ contract WillieWatt {
       
       balanceOf[msg.sender] -= _value;
       totalSupply -= _value;
-      Transfer(msg.sender, this,10);
+      Transfer(msg.sender, this, _value);
       return true;
     }
     
