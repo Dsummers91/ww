@@ -71,8 +71,8 @@ contract WillieWatt {
       if(balanceOf[msg.sender] - etherValue < 0) throw;   
       if(!msg.sender.send(etherValue)) throw;
       
-      balanceOf[msg.sender] = balanceOf[msg.sender] - _value;
-      totalSupply = totalSupply - _value;
+      balanceOf[msg.sender] -= _value;
+      totalSupply -= _value;
       Transfer(msg.sender, this,10);
       return true;
     }
