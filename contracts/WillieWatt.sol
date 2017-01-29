@@ -66,13 +66,14 @@ contract WillieWatt {
     }
 
     function refund(uint256 _value) returns (bool success) {
-      uint256 etherValue = (_value / 1000) * 1 ether;
+      uint256 etherValue = (_value * 1 ether) / 1000;
 
-      balanceOf[msg.sender] -= _value;
-      totalSupply -= _value;
-      if(balanceOf[msg.sender] < 0) throw;                      // Do not process is balance will fall below 0;
+      if(balanceOf[msg.sender] - etherValue < 0) throw;   
       if(!msg.sender.send(etherValue)) throw;
-      Transfer(msg.sender, this, _value);
+      
+      balanceOf[msg.sender] = balanceOf[msg.sender] - _value;
+      totalSupply = totalSupply - _value;
+      Transfer(msg.sender, this,10);
       return true;
     }
     
