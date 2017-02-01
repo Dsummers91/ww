@@ -68,7 +68,7 @@ contract WillieWatt {
     function refund(uint256 _value) returns (bool success) {
       uint256 etherValue = (_value * 1 ether) / 1000;
 
-      if(balanceOf[msg.sender] - etherValue < 0) throw;   
+      if(balanceOf[msg.sender] < _value) throw;   
       if(!msg.sender.send(etherValue)) throw;
       
       balanceOf[msg.sender] -= _value;
